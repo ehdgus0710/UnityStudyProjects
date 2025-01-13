@@ -2,12 +2,12 @@
 using Newtonsoft.Json;
 using System.IO;
 using UnityEngine;
-using SaveDataVC = SaveDataV2;
+using SaveDataVC = SaveDataV3;
 
 public static class SaveLoadManager
 {
     // 클라이언트의 버전
-    public static int SaveDataVersion { get; private set; } = 1;
+    public static int SaveDataVersion { get; private set; } = 3;
 
     // Data를 게임에 맞게 제작해도 됨
     // 현재 진행되고 있는 게임의 데이터
@@ -47,7 +47,6 @@ public static class SaveLoadManager
 
     public static bool Save(int slot = 0)
     {
-
         if (Data == null || slot < 0 || slot >= SaveFileName.Length)
             return false;
 
@@ -79,6 +78,6 @@ public static class SaveLoadManager
 
         Data = saveData as SaveDataVC;
 
-        return false;
+        return true;
     }
 }

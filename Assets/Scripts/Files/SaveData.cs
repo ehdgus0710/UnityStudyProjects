@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public abstract class SaveData
 {
     public int Version { get; protected set; }
@@ -31,7 +33,23 @@ public class SaveDataV2 : SaveData
 
     public override SaveData VersionUp()
     {
-        var data = new SaveDataV2();
+        var data = new SaveDataV3();
         return data;
     }
+}
+
+public class SaveDataV3 : SaveDataV2
+{
+    public List<SaveItemData> items = new List<SaveItemData>();
+
+    public SaveDataV3()
+    {
+        Version = 3;
+    }
+    public override SaveData VersionUp()
+    {
+        var data = new SaveDataV3();
+        return data;
+    }
+
 }
