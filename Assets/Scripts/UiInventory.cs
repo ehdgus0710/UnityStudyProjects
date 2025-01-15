@@ -27,6 +27,9 @@ public class UiInventory : MonoBehaviour, IDragHandler
     private int filterIndex = -1;
     private int filterDefaultOptionCount;
 
+    private int dragSeletedSlotIndex;
+    private bool isOnDrag = false;
+
     public void AddListeners(UnityAction action)
     {
         foreach (var slot in slotList)
@@ -45,10 +48,36 @@ public class UiInventory : MonoBehaviour, IDragHandler
             slot.SlotIndex = i;
             slot.SetEmpty();
             slot.button.onClick.AddListener(() => { SeletedSlotIndex = slot.SlotIndex; });
-            slot.onPointerEnter.AddListener(() =>
+            //slot.onPointerEnter.AddListener(() =>
+            //{
+            //    if (!testList.Contains(slot))
+            //        testList.Add(slot);
+            //});
+
+            slot.onDragEnter.AddListener(() =>
             {
-                if (!testList.Contains(slot))
-                    testList.Add(slot);
+                isOnDrag = true;
+                dragSeletedSlotIndex =  slot.SlotIndex;
+            });
+
+            slot.onDragExit.AddListener((PointerEventData eventData) =>
+            {
+                var results = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(eventData, results);
+
+                foreach (var result in results)
+                {
+                    var uiItemSlot = result.gameObject.GetComponent<UiItemSlot>();
+                    if(uiItemSlot != null)
+                    {
+                        (tempItemList[dragSeletedSlotIndex], tempItemList[uiItemSlot.SlotIndex]) = (tempItemList[uiItemSlot.SlotIndex], tempItemList[dragSeletedSlotIndex]);
+                        UpdateSlots(tempItemList);
+                        break;
+                    }
+                }
+
+                isOnDrag = false;
+                dragSeletedSlotIndex = -1;
             });
 
             // slot.onPointerExit.AddListener(() => testList.Remove(slot));
@@ -180,12 +209,62 @@ public class UiInventory : MonoBehaviour, IDragHandler
 
     public void OnDrag(PointerEventData eventData)
     {
-        var results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
+        //var results = new List<RaycastResult>();
+        //EventSystem.current.RaycastAll(eventData, results);
 
-        foreach(var item in results)
+        //foreach(var item in results)
+        //{
+        //    Debug.Log(item.gameObject.name);
+        //}
+    }
+
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        var selectedObject = EventSystem.current.currentSelectedGameObject;
+        var uiItemSlot = selectedObject?.GetComponent<UiItemSlot>();
+
+        if(uiItemSlot != null)
         {
-            Debug.Log(item.gameObject.name);
+            dragSeletedSlotIndex = uiItemSlot.SlotIndex;
+            isOnDrag = true;
         }
+        else
+        {
+            isOnDrag = false;
+            dragSeletedSlotIndex = -1;
+        }
+    }
+
+
+    public void OnDragEnterItemSlot()
+    {
+        //dragSeletedSlotIndex = uiItemSlot.SlotIndex;
+        //isOnDrag = true;
+    }
+    public void OnDragExitItemSlot()
+    {
+
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if(!isOnDrag)
+        {
+            isOnDrag = false;
+            dragSeletedSlotIndex = -1;
+        }
+
+
+        var selectedObject = EventSystem.current.currentSelectedGameObject;
+        var uiItemSlot = selectedObject?.GetComponent<UiItemSlot>();
+
+        if (uiItemSlot == null)
+            return;
+
+        (tempItemList[dragSeletedSlotIndex], tempItemList[uiItemSlot.SlotIndex]) = (tempItemList[uiItemSlot.SlotIndex], tempItemList[dragSeletedSlotIndex]);
+        UpdateSlots(tempItemList);
+        isOnDrag = false;
+        dragSeletedSlotIndex = -1;
     }
 }
