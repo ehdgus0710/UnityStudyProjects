@@ -40,7 +40,7 @@ public class SaveDataV2 : SaveData
 
 public class SaveDataV3 : SaveDataV2
 {
-    public List<SaveItemData> items = new List<SaveItemData>();
+    public List<SaveItemData> itemList = new List<SaveItemData>();
 
     public SaveDataV3()
     {

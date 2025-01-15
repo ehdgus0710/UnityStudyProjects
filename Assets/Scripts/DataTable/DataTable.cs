@@ -13,9 +13,12 @@ public abstract class DataTable
     public static List<T> LoadCSV<T>(string csv)
     {
         using (var reader = new StringReader(csv))
-        using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
-            return csvReader.GetRecords<T>().ToList<T>();
+            using (var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                return csvReader.GetRecords<T>().ToList<T>();
+            }
         }
+        
     }
 }

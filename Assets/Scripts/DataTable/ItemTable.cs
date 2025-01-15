@@ -6,6 +6,7 @@ public enum ItemTypes
     Weapon,
     Equip,
     Consumable,
+    End
 }
 public class ItemData
 {
