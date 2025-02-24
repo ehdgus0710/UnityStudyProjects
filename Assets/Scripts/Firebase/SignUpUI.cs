@@ -21,9 +21,7 @@ public class SignUpUI : MonoBehaviour
 
     private void Start()
     {
-        signUpButton.onClick.RemoveListener(OnSignUpButtonClicked);
         signUpButton.onClick.AddListener(OnSignUpButtonClicked);
-        cancelButton.onClick.RemoveListener(OnCancelButtonClicked);
         cancelButton.onClick.AddListener(OnCancelButtonClicked);
     }
 

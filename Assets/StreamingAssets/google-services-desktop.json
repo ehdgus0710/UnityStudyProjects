@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "431221040025",
+    "firebase_url": "https://fir-study-f90b0-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "fir-study-f90b0",
+    "storage_bucket": "fir-study-f90b0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431221040025:android:deb9af6761eab33f922908",
+        "android_client_info": {
+          "package_name": "com.Company.UnityStudyProject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEkPAXH3Jl4P_CDneaB-orrr8FDCRxB-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

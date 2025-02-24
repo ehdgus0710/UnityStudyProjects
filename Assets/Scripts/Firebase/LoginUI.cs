@@ -16,10 +16,7 @@ public class LoginUI : MonoBehaviour
 
     private void Start()
     {
-        signUpButton.onClick.RemoveListener(OnSignUpButtonClicked);
         signUpButton.onClick.AddListener(OnSignUpButtonClicked);
-
-        signInButton.onClick.RemoveListener(OnSignInButtonClicked);
         signInButton.onClick.AddListener(OnSignInButtonClicked);
     }
 
